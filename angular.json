@@ -1,9 +1,12 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "1cbeb7ec-d199-44a3-a0e5-22b24621a565"
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ng-animations": {
+    "ng-animations-demo": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ng-animations",
+            "outputPath": "dist/ng-animations-demo",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -72,10 +75,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ng-animations:build:production"
+              "browserTarget": "ng-animations-demo:build:production"
             },
             "development": {
-              "browserTarget": "ng-animations:build:development"
+              "browserTarget": "ng-animations-demo:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,7 +86,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ng-animations:build"
+            "browserTarget": "ng-animations-demo:build"
           }
         },
         "test": {
@@ -105,7 +108,38 @@
           }
         }
       }
+    },
+    "ng-animations": {
+      "projectType": "library",
+      "root": "projects/ng-animations",
+      "sourceRoot": "projects/ng-animations/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ng-animations/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ng-animations/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ng-animations/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-animations/src/test.ts",
+            "tsConfig": "projects/ng-animations/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-animations/karma.conf.js"
+          }
+        }
+      }
     }
   },
-  "defaultProject": "ng-animations"
+  "defaultProject": "ng-animations-demo"
 }
